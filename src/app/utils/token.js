@@ -6,7 +6,7 @@ exports.generateToken= (userInfo)=>{
         userId:userInfo._id
     }
     const token = jwt.sign(payLoad, process.env.TOKEN_SECRET,{
-        expiresIn: "1day",
+        expiresIn: "1h",
     })
     return token;
 }
