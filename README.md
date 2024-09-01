@@ -15,12 +15,14 @@ This project is a backend system for managing train services, stations, user wal
 ## For Runs Locally
 
 1. Clone the repository:
+   -git clone
 
    ```bash
-   git clone git@github.com:jahidrony037/train-service-ms-server.git
-   cd train-service-ms-server
+    git@github.com:jahidrony037/train-service-ms-server.git
 
    ```
+
+   - cd train-service-ms-server
 
 2. Install dependencies:
    yarn
