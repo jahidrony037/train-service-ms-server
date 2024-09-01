@@ -4,7 +4,7 @@ exports.addTrain = async (req,res)=>{
     try {
         const data = req.body;
         const result = await Train.create(data);
-        console.log(result);
+        // console.log(result);
         if(!result){
             return res.status(401).json({status:"failed", message:"train not created"})
         }
