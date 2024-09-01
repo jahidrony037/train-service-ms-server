@@ -7,11 +7,15 @@ exports.singUP= async (req,res)=>{
     try {
         // const {name,email,password,mobileNumber}=req.body;
         const data = req.body;
-        const {email}=data;
+        const {email,accountType}=data;
+        if(accountType==="admin"){
+            return res.status(400).json({message:"sorry you can not register as an admin"});
+        }
         let user = await Auth.findOne({email});
         if(user){
             return res.status(400).json({message:"User Already Exists"});
         }
+        
 
         const result = await Auth.create(data);
         console.log('result', result);

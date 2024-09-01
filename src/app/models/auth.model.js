@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const bcrypt = require('bcryptjs');
 const validator = require ('validator');
+const { userRole } = require("../constants");
 const {ObjectId} = mongoose.Schema.Types;
 
 const authSchema= new mongoose.Schema(
@@ -27,9 +28,24 @@ const authSchema= new mongoose.Schema(
             required:true,
             message:"Please Enter a Password"
         },
+        accountType:{
+            type:String,
+            enum:{
+                values: [userRole.user, userRole.admin],
+                message:"{VALUE} can't be an account type",
+            }
+        },
         wallet:{
             type:ObjectId,
             ref:"Wallet"
+        },
+        user:{
+            type:ObjectId,
+            ref:"User"
+        },
+        admin:{
+            type:ObjectId,
+            ref:"Admin"
         },
         createdAt:{
             type:Date,
