@@ -18,7 +18,7 @@ exports.singUP= async (req,res)=>{
         
 
         const result = await Auth.create(data);
-        console.log('result', result);
+        // console.log('result', result);
 
         if(result){
             
