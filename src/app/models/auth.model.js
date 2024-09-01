@@ -30,6 +30,7 @@ const authSchema= new mongoose.Schema(
         },
         accountType:{
             type:String,
+            default: userRole.user,
             enum:{
                 values: [userRole.user, userRole.admin],
                 message:"{VALUE} can't be an account type",
