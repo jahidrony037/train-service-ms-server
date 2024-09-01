@@ -34,3 +34,17 @@ exports.getStations=async(req,res)=>{
         res.status(500).json({status: "failed", error: error.message});
     }
 }
+
+exports.singleStation=async(req,res)=>{
+    try {
+        const id= req.params.id;
+        // console.log(id);
+        const result = await Station.findOne({_id:id});
+        if(!result){
+            return res.status(401).json({status:"failed", message:"not found"})
+        }
+        res.status(200).json({status:"success", data:result})
+    } catch (error) {
+        res.status(500).json({status: "failed", error: error.message});
+    }
+}
