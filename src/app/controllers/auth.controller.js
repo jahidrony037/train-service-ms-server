@@ -1,5 +1,7 @@
 const Auth = require("../models/auth.model");
+const { findUserByEmailService } = require("../services/auth.service");
 const {generateToken} = require('../utils/token');
+const { verifyPassword } = require("../utils/verifyPassword");
 
 exports.singUP= async (req,res)=>{
     try {
@@ -26,7 +28,60 @@ exports.singUP= async (req,res)=>{
         }
         
     } catch (error) {
-        res.status(500).json({status: "failed", message: error.message});
+        res.status(500).json({status: "failed", error: error.message});
     }
 
+}
+
+exports.login = async (req,res)=>{
+    try {
+        const {email, password}= req.body;
+        // console.log("email: ",email);
+        if(!email || !password){
+            return res.status(401).json({
+                status: "failed",
+                error: "please give your right credentials",
+              });
+        }
+
+        const user = await findUserByEmailService(email);
+        // console.log(user);
+        if (!user) {
+            return res.status(401).json({
+              status: "failed",
+              error: "no result found with this email",
+            });
+          }
+
+          const isValidPassword = verifyPassword(password, user?.password);
+          if (!isValidPassword) {
+            return res.status(401).json({
+              status: "failed",
+              error: "password not correct",
+            });
+          }
+
+          const token = generateToken(user);
+          if(token){
+            res.status(200).json({
+                status: "success",
+                message: "successfully logged in",
+                data: user,
+                token,
+              });
+          }
+
+
+
+
+
+
+
+
+    } catch (error) {
+        res.status(400).json({
+            status: "failed",
+            error: error.message,
+          });
+    }
 }
