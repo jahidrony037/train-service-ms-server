@@ -89,3 +89,15 @@ exports.login = async (req,res)=>{
           });
     }
 }
+
+exports.getAllUsers = async(req,res)=>{
+  try {
+      const result = await Auth.find().select('-password');
+      if(!result){
+        return res.status(401).json({status:"failed", message:"not founds!"})
+      }
+      res.status(200).json({status:"success", data:result});
+  } catch (error) {
+    res.status(500).json({status: "failed", error: error.message});
+  }
+}
