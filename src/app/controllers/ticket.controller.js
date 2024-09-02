@@ -59,3 +59,15 @@ exports.purchaseTicket= async (req,res)=>{
         res.status(500).json({status: "failed", error: error.message});
     }
 }
+
+exports.getTickets= async(req,res)=>{
+    try {
+        const result = await Ticket.find({user: req.user._id}).populate('train from to');
+        if(!result){
+            res.status(401).json({status:"failed", error:"tickets not found"});
+        }
+        res.status(200).json({status:"success", data:result});
+    } catch (error) {
+        res.status(500).json({status: "failed", error: error.message});
+    }
+}
