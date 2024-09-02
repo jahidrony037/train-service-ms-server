@@ -20,6 +20,8 @@ app.listen(port, async()=>{
     await connectDB();
 })
 
+require('./trainSchedule.js');
+
 
 
 
